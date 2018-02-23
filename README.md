@@ -55,3 +55,12 @@ email:
         ignoreTLS: true
         rejectUnauthorized: false
 ```
+
+## Executing Tasks on Demand
+
+Create a terminal session with the running TickTock container and run the script as shown below. You will be presented with a list of available tasks. Make a selection, and it will be immediately executed.
+
+```
+$ docker-compose exec ticktock sh
+$ ./execute
+````
