@@ -1,8 +1,19 @@
 'use strict';
 
-exports = module.exports = function(config, docker, taskManager) {
+exports = module.exports = function(config, docker, taskManager, ipcServer) {
     
     class Boot {
+        
+        constructor() {
+            
+            process.on('SIGTERM', () => {
+                return taskManager.shutdown()
+                    .then(() => {
+                        process.exit(0);
+                    });
+            });
+            
+        }
         
     }
     
@@ -11,4 +22,4 @@ exports = module.exports = function(config, docker, taskManager) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['config', 'docker', 'task-manager'];
+exports['@require'] = ['config', 'docker', 'task-manager', 'ipc-server'];

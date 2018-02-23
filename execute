@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+const dnode = require('dnode');
+const Promise = require('bluebird');
+const inquirer = require('inquirer');
+let client;
+
+function init() {
+    
+    return new Promise((resolve, reject) => {
+        try {
+            client = dnode.connect(9090);
+        } catch(e) {
+            return reject(e);
+        }
+        client.on('error', (err) => {
+            throw err;
+        });
+        client.on('remote', (remote) => {
+            return resolve(remote);
+        });
+    });
+    
+}
+
+init()
+    .then((api) => {
+
+        api.getTasks((err, tasks) => {
+            if (err) {
+                throw err;
+            }
+            return inquirer.prompt([
+                {
+                    'message': 'Select the task to execute',
+                    'name': 'id',
+                    'type': 'list',
+                    'choices': tasks.map((task) => {
+                        return {
+                            'name': task.title,
+                            'value': task.id
+                        };
+                    })
+                }
+            ])
+                .then(({ id }) => {
+                    
+                    api.execute(id, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log(`Task is executing.`);
+                        process.exit(0);
+                    });
+                    
+                });
+        });
+
+    });

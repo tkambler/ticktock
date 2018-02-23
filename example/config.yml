@@ -7,14 +7,16 @@ tasks:
     command: ["ls", "-al"]
     overlap: false
     enabled: false
+    execute_on_start: false
   - title: List running processes
     description: It lists running processes.
-    interval: every 1 minutes
+    interval: every 10 seconds
     type: exec
     container: tunnelbot_server_1
     command: ["ps", "aux"]
     overlap: false
     enabled: true
+    execute_on_start: true
     # email: foo@localhost.site
     # batch_email_interval: 3
 email:

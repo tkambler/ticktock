@@ -9,6 +9,7 @@ exports = module.exports = function(appDir) {
     const fs = require('app/fs');
     const _ = require('lodash');
     const yaml = require('js-yaml');
+    const uuid = require('uuid');
     let config;
     
     const confit = Promise.promisifyAll(require('confit')({
@@ -32,9 +33,11 @@ exports = module.exports = function(appDir) {
             _.defaults(task, {
                 'overlap': false,
                 'enabled': true,
+                'execute_on_start': false,
                 'email': []
             });
             
+            task.id = uuid.v4();
             task.batch_email_interval = parseInt(task.batch_email_interval, 10);
             task.batch_email_interval = task.batch_email_interval || 0;
             

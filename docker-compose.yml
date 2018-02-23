@@ -8,6 +8,7 @@ services:
       context: .
     ports:
       - "80:80"
+    entrypoint: nodemon start.js
     volumes:
       - .:/opt/ticktock
       - ./example/config.yml:/config.yml

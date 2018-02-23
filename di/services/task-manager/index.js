@@ -3,7 +3,6 @@
 exports = module.exports = function(config, docker, notifications) {
     
     const { ExecTask, RunTask } = require('app/tasks');
-    const md5 = require('md5');
     const _ = require('lodash');
     const prettyjson = require('prettyjson');
     
@@ -63,7 +62,7 @@ exports = module.exports = function(config, docker, notifications) {
             
             console.log('Registered task:')
             console.log('');
-            this.tasks[0].print();
+            task.print();
             console.log('');
 
         }
@@ -84,12 +83,6 @@ exports = module.exports = function(config, docker, notifications) {
             
         }
         
-        getTaskObjectID(task) {
-            
-            return md5(JSON.stringify(task));
-            
-        }
-        
         onConfigChange() {
             
             console.log('Configuration file has been updated.');
@@ -99,7 +92,7 @@ exports = module.exports = function(config, docker, notifications) {
             this.tasks.forEach((task) => {
                 
                 const taskObj = _.find(config.get('tasks'), (taskObj) => {
-                    return this.getTaskObjectID(taskObj) === task.id;
+                    return taskObj.id === task.id;
                 });
                 
                 if (!taskObj) {
@@ -112,8 +105,7 @@ exports = module.exports = function(config, docker, notifications) {
             
             config.get('tasks').forEach((taskObj) => {
             
-                const id = this.getTaskObjectID(taskObj);
-                let task = this.getTaskByID(id);
+                let task = this.getTaskByID(taskObj.id);
                 
                 if (task) {
                     return;
@@ -158,6 +150,41 @@ exports = module.exports = function(config, docker, notifications) {
             const idx = this.tasks.indexOf(task);
             this.tasks.splice(idx, 1);
             task.stop();
+            
+        }
+        
+        shutdown() {
+            
+            return new Promise((resolve, reject) => {
+                
+                const running = [];
+                
+                this.tasks.forEach((task) => {
+                    task.stop();
+                    if (task.isRunning()) {
+                        running.push(task);
+                        task.once('drain', () => {
+                            running.splice(running.indexOf(task), 1);
+                            if (running.length === 0) {
+                                return resolve();
+                            }
+                        });
+                    }
+                });
+                
+            });
+            
+        }
+        
+        execute(id) {
+            
+            const task = this.getTaskByID(id);
+            
+            if (!task) {
+                throw new Error(`Unable to locate task with ID: ${id}`);
+            }
+            
+            task.execute();
             
         }
         

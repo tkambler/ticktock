@@ -12,8 +12,10 @@
     "ahoy-di": "^1.2.0",
     "bluebird": "^3.5.1",
     "confit": "^2.3.0",
+    "dnode": "^1.2.2",
     "dockerode": "^2.5.4",
     "eventemitter2": "^5.0.1",
+    "inquirer": "^5.1.0",
     "js-yaml": "^3.10.0",
     "json5": "^0.5.1",
     "later": "^1.2.0",
@@ -25,6 +27,7 @@
     "prettyjson": "^1.2.1",
     "shortstop-concat": "^1.0.2",
     "shortstop-handlers": "^1.0.1",
+    "uuid": "^3.2.1",
     "winston": "^2.4.0"
   }
 }
