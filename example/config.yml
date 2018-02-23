@@ -10,7 +10,7 @@ tasks:
     execute_on_start: false
   - title: List running processes
     description: It lists running processes.
-    interval: every 10 seconds
+    interval: every 1 minutes
     type: exec
     container: tunnelbot_server_1
     command: ["ps", "aux"]

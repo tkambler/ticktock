@@ -18,6 +18,9 @@ exports = module.exports = function(config, docker, notifications) {
             
             config.on('change', this.onConfigChange.bind(this));
             
+            // setInterval(this.printStatus.bind(this), 5000);
+            // this.printStatus();
+            
         }
         
         get tasks() {
@@ -185,6 +188,24 @@ exports = module.exports = function(config, docker, notifications) {
             }
             
             task.execute();
+            
+        }
+        
+        printStatus() {
+            
+            const data = this.tasks.map((task) => {
+                
+                return {
+                    'Title': task.title,
+                    'Description': task.description,
+                    'Total Executions': task.executionCount,
+                    'Last Execution': task.getLastExecution(),
+                    'Next Execution': task.getNextExecution()
+                }
+                
+            });
+            
+            console.log(prettyjson.render(data));
             
         }
         
