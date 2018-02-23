@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
   ticktock:
-    image: ticktock
+    image: tkambler/ticktock
     build:
       context: .
     ports:

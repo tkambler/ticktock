@@ -44,17 +44,19 @@ exports = module.exports = function(config, docker, notifications) {
                 
                 console.log('Task completed:');
                 console.log('');
+                console.log('Exit Code: ' + res.exitCode);
+                console.log('');
                 console.log(res.outputBuffer.toString('utf8'));
                 console.log('');
+
+            });
+            
+            task.on('notify', (res) => {
                 
                 if (task.email) {
                     notifications.email(task, res);
                 }
-
-                // console.log('res', res);
-                // console.log('out', res.outputBuffer.toString('utf8'));
-                // console.log('err', res.errorBuffer.toString('utf8'));
-
+                
             });
             
             this.tasks.push(task);

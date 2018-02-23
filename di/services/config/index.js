@@ -35,6 +35,9 @@ exports = module.exports = function(appDir) {
                 'email': []
             });
             
+            task.batch_email_interval = parseInt(task.batch_email_interval, 10);
+            task.batch_email_interval = task.batch_email_interval || 0;
+            
             if (task.email && !_.isArray(task.email)) {
                 task.email = task.email.split(',')
                     .map((email) => {

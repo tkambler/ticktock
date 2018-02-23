@@ -39,17 +39,7 @@ exports = module.exports = function(config) {
         }
         
         email(task, res) {
-            
-            // console.log('email', task, res);
-            
-            // const mailOptions = {
-            //     'from': msg.from.value,
-            //     'to': msg.to.value,
-            //     'subject': msg.subject,
-            //     'text': msg.text,
-            //     'html': msg.textAsHtml,
-            // };
-            
+
             if (!this.emailTransport) {
                 return;
             }
@@ -58,10 +48,7 @@ exports = module.exports = function(config) {
                 
                 const options = {
                     'from': `${config.get('email:smtp:from_name')} <${config.get('email:smtp:from_email')}>`,
-                    'to': email,
-                    // 'subject': 'Test',
-                    // 'text': 'Text',
-                    // 'html': 'HTML'
+                    'to': email
                 };
                 
                 _.extend(options, this.generateEmail(task, res));
@@ -74,21 +61,50 @@ exports = module.exports = function(config) {
         
         generateEmail(task, res) {
             
-            // console.log(task, res);
-            
             const message = {};
             
-            if (res.exitCode === 0) {
+            if (_.isArray(res)) { // res is an array of batched notification objects.
                 
-                message.subject = `Task Succeeded: ${task.title}`;
-                message.html = `Title: ${task.title}<br>Description: ${task.description}<br>Start: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br>End: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br><br><pre>${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}</pre>`;
-                message.text = `Title: ${task.title}\nDescription: ${task.description}\nStart: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\nEnd: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\n\n${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}`;
+                const successCount = res.reduce((acc, curr) => {
+                    if (curr.exitCode === 0) {
+                        acc = acc + 1;
+                    }
+                    return acc;
+                }, 0);
                 
-            } else {
+                const failureCount = res.reduce((acc, curr) => {
+                    if (curr.exitCode !== 0) {
+                        acc = acc + 1;
+                    }
+                    return acc;
+                }, 0);
                 
-                message.subject = `Task Failed: ${task.title}`;
-                message.html = `Title: ${task.title}<br>Description: ${task.description}<br>Start: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br>End: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br><br><pre>${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}</pre>`;
-                message.text = `Title: ${task.title}\nDescription: ${task.description}\nStart: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\nEnd: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\n\n${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}`;
+                message.subject = `Task ${task.title}: ${successCount} successful run(s), ${failureCount} failure(s)`;
+                message.html = `Title: ${task.title}<br>Description: ${task.description}<br><br>`;
+                message.text = `Title: ${task.title}\nDescription: ${task.description}\n\n`;
+                
+                res.forEach((res) => {
+                    
+                    message.html += `<hr><br><br>Start: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br>End: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br><br><pre>${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}</pre><br><br>`;
+                    message.text += `--------------------\n\nStart: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\nEnd: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\n\n${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}\n\n`;
+                    
+                });
+                
+            } else { // res is a single notification object.
+                
+                if (res.exitCode === 0) {
+                
+                    message.subject = `Task Succeeded: ${task.title}`;
+                    message.html = `Title: ${task.title}<br>Description: ${task.description}<br>Start: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br>End: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br><br><pre>${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}</pre>`;
+                    message.text = `Title: ${task.title}\nDescription: ${task.description}\nStart: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\nEnd: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\n\n${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}`;
+                
+                } else {
+                
+                    message.subject = `Task Failed: ${task.title}`;
+                    message.html = `Title: ${task.title}<br>Description: ${task.description}<br>Start: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br>End: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}<br><br><pre>${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}</pre>`;
+                    message.text = `Title: ${task.title}\nDescription: ${task.description}\nStart: ${res.start.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\nEnd: ${res.end.format('dddd, MMMM Do YYYY, h:mm:ss a Z')}\n\n${res.outputBuffer.toString('utf8')}\n\n-----\n\n${res.errorBuffer.toString('utf8')}`;
+                
+                }
                 
             }
             

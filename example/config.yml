@@ -12,10 +12,11 @@ tasks:
     interval: every 10 seconds
     type: exec
     container: tunnelbot_server_1
-    command: ["sleep", "5", "&&", "ps", "aux"]
+    command: ["ps", "aux"]
     overlap: false
     enabled: true
     email: foo@localhost.site
+    batch_email_interval: 3
 email:
   smtp:
     from_name: TickTock
