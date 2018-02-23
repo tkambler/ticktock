@@ -9,14 +9,14 @@ tasks:
     enabled: false
   - title: List running processes
     description: It lists running processes.
-    interval: every 10 seconds
+    interval: every 1 minutes
     type: exec
     container: tunnelbot_server_1
     command: ["ps", "aux"]
     overlap: false
     enabled: true
-    email: foo@localhost.site
-    batch_email_interval: 3
+    # email: foo@localhost.site
+    # batch_email_interval: 3
 email:
   smtp:
     from_name: TickTock
