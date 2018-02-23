@@ -1,0 +1,30 @@
+tasks:
+  - title: Do Something
+    description: It does something very important.
+    interval: every 10 seconds
+    type: run
+    image: mhart/alpine-node:8.6.0
+    command: ["ls", "-al"]
+    overlap: false
+    enabled: false
+  - title: List running processes
+    description: It lists running processes.
+    interval: every 10 seconds
+    type: exec
+    container: tunnelbot_server_1
+    command: ["sleep", "5", "&&", "ps", "aux"]
+    overlap: false
+    enabled: true
+    email: foo@localhost.site
+email:
+  smtp:
+    from_name: TickTock
+    from_email: ticktock@localhost.site
+    config:
+      host: maildev
+      port: 25
+      secure: false
+      tls:
+        secure: false
+        ignoreTLS: true
+        rejectUnauthorized: false

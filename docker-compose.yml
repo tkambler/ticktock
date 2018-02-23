@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+
+  ticktock:
+    image: ticktock
+    build:
+      context: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/opt/ticktock
+      - ./example/config.yml:/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    userns_mode: "host"
+    
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - "1080:80"

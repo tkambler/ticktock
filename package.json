@@ -1,0 +1,30 @@
+{
+  "name": "ticktock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ahoy-di": "^1.2.0",
+    "bluebird": "^3.5.1",
+    "confit": "^2.3.0",
+    "dockerode": "^2.5.4",
+    "eventemitter2": "^5.0.1",
+    "js-yaml": "^3.10.0",
+    "json5": "^0.5.1",
+    "later": "^1.2.0",
+    "lodash": "^4.17.5",
+    "md5": "^2.2.1",
+    "moment": "^2.20.1",
+    "node-cron": "^1.2.1",
+    "nodemailer": "^4.6.0",
+    "prettyjson": "^1.2.1",
+    "shortstop-concat": "^1.0.2",
+    "shortstop-handlers": "^1.0.1",
+    "winston": "^2.4.0"
+  }
+}
