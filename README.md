@@ -55,6 +55,9 @@ tasks:
     command: ["ps", "aux"]
     overlap: false
     enabled: true
+    # If specified, each time the task is run a random number between 0 and the provided value
+    # will be generated. Execution of the task will then delayed by that number of seconds.
+    random_delay: 20
     # If SMTP notifications have been configured, you can pass an array of recipients here.
     email:
       - foo@localhost.site

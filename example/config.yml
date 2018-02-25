@@ -17,6 +17,7 @@ tasks:
     overlap: false
     enabled: true
     execute_on_start: true
+    random_delay: 20
     # email: foo@localhost.site
     # batch_email_interval: 3
 email:

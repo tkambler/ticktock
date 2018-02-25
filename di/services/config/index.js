@@ -34,12 +34,15 @@ exports = module.exports = function(appDir) {
                 'overlap': false,
                 'enabled': true,
                 'execute_on_start': false,
-                'email': []
+                'email': [],
+                'random_delay': 0
             });
             
             task.id = uuid.v4();
             task.batch_email_interval = parseInt(task.batch_email_interval, 10);
             task.batch_email_interval = task.batch_email_interval || 0;
+            task.random_delay = parseInt(task.random_delay, 10);
+            task.random_delay = task.random_delay || 0;
             
             if (task.email && !_.isArray(task.email)) {
                 task.email = task.email.split(',')
