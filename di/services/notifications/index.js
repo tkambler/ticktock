@@ -5,6 +5,7 @@ exports = module.exports = function(config) {
     const Promise = require('bluebird');
     const nodemailer = require('nodemailer');
     const _ = require('lodash');
+    const fs = require('app/fs');
         
     class Notifications {
         
@@ -35,6 +36,46 @@ exports = module.exports = function(config) {
             this._emailTransport = Promise.promisifyAll(nodemailer.createTransport(config.get('email:smtp:config')));
             
             return this._emailTransport;
+            
+        }
+        
+        get customProviderPath() {
+            
+            return '/opt/ticktock/notifications/index.js';
+            
+        }
+        
+        getCustomProvider() {
+            
+            return Promise.resolve()
+                .then(() => {
+                    
+                    if (!_.isUndefined(this.customProvider)) {
+                        return this.customProvider;
+                    }
+                    
+                    return fs.statAsync(this.customProviderPath)
+                        .then(() => {
+                            return this.customProvider = require(this.customProviderPath);
+                        })
+                        .catch(() => {
+                            return this.customProvider = null;
+                        });
+                    
+                });
+            
+        }
+        
+        custom(task, res) {
+            
+            return this.getCustomProvider()
+                .then((provider) => {
+                    if (!provider) {
+                        return;
+                    }
+                    provider(task, res);
+                    return null;
+                });
             
         }
         

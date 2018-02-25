@@ -59,6 +59,8 @@ exports = module.exports = function(config, docker, notifications) {
                     notifications.email(task, res);
                 }
                 
+                notifications.custom(task, res);
+                
             });
             
             this.tasks.push(task);

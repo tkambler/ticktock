@@ -11,10 +11,10 @@ services:
     entrypoint: nodemon start.js
     volumes:
       - .:/opt/ticktock
+      - ./example/notifications:/opt/ticktock/notifications
       - ./example/config.yml:/config.yml
       - /var/run/docker.sock:/var/run/docker.sock
-    userns_mode: "host"
-    
+
   maildev:
     image: djfarrelly/maildev
     ports:
