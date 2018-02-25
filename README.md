@@ -4,7 +4,7 @@
 
 TickTock runs scheduled tasks within Docker containers. Each task can be independently configured to run within an existing container or within a container that is automatically created and subsequently removed. TickTock includes built-in support for sending task notifications via SMTP. It can also be extended to send notifications using a custom service that you provide in the form of a [Node.js](https://nodejs.org/) script.
 
-The interval at which a task is run is defined using natural language with the help of the [Later](https://bunkat.github.io/later/getting-started.html) module. For example, to execute a task every ten minutes we would simply set an `interval` of `every 10 minutes`.
+The interval at which a task is run is defined using natural language with the help of the [Later](https://bunkat.github.io/later/getting-started.html) module. For example, to execute a task every ten minutes you would simply set an `interval` of `every 10 minutes`.
 
 ## Sample docker-compose.yml
 
@@ -55,7 +55,7 @@ tasks:
     command: ["ps", "aux"]
     overlap: false
     enabled: true
-    # If SMPT notifications have been configured, you can pass an array of recipients here.
+    # If SMTP notifications have been configured, you can pass an array of recipients here.
     email:
       - foo@localhost.site
       - herp@derp.com
