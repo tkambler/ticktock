@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+const dnode = require('dnode');
+const Promise = require('bluebird');
+const inquirer = require('inquirer');
+const prettyjson = require('prettyjson');
+let client;
+
+function init() {
+    
+    return new Promise((resolve, reject) => {
+        try {
+            client = dnode.connect(9090);
+        } catch(e) {
+            return reject(e);
+        }
+        client.on('error', (err) => {
+            throw err;
+        });
+        client.on('remote', (remote) => {
+            return resolve(remote);
+        });
+    });
+    
+}
+
+init()
+    .then((api) => {
+
+        api.getTasks((err, tasks) => {
+            
+            if (err) {
+                throw err;
+            }
+
+            console.log(prettyjson.render(tasks));
+            
+            process.exit();
+            
+        });
+
+    });

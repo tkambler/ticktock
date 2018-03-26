@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(config, docker, notifications) {
+exports = module.exports = function(config, docker, notifications, log) {
     
     const { ExecTask, RunTask } = require('app/tasks');
     const _ = require('lodash');
@@ -65,7 +65,7 @@ exports = module.exports = function(config, docker, notifications) {
             
             this.tasks.push(task);
             
-            console.log('Registered task:')
+            console.log('Registered task:');
             console.log('');
             task.print();
             console.log('');
@@ -76,9 +76,9 @@ exports = module.exports = function(config, docker, notifications) {
             
             switch (task.type) {
                 case 'exec':
-                    return new ExecTask(task);
+                    return new ExecTask(task, config, log);
                 case 'run':
-                    return new RunTask(task);
+                    return new RunTask(task, config, log);
                 default:
                     const err = new Error();
                     err.code = 'INVALID_TASK_TYPE';
@@ -218,4 +218,4 @@ exports = module.exports = function(config, docker, notifications) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['config', 'docker', 'notifications'];
+exports['@require'] = ['config', 'docker', 'notifications', 'log'];

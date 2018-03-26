@@ -47,6 +47,8 @@ tasks:
   - title: List running processes
     description: It lists running processes.
     interval: every 10 seconds
+    # You can also define the interval using the crontab format (see below).
+    # interval: "23 16 * * *"
     # Valid values: run, exec
     # An `exec` task runs within a pre-existing container that has already been started.
     type: exec
@@ -85,11 +87,19 @@ email:
 
 ## Executing Tasks on Demand
 
-Create a terminal session with the running TickTock container and run the script as shown below. You will be presented with a list of available tasks. Make a selection, and it will be immediately executed.
+Create a terminal session within the running TickTock container and run the script as shown below. You will be presented with a list of available tasks. Make a selection, and it will be immediately executed.
 
 ```
 $ docker-compose exec ticktock sh
 $ ./execute
+````
+## Generating a Task Report
+
+Create a terminal session within the running TickTock container and run the script as shown below. You will be presented with a list of defined tasks, including the previous and next execution times for each task.
+
+```
+$ docker-compose exec ticktock sh
+$ ./report
 ````
 
 ## Extending TickTock with Custom Notification Recipients

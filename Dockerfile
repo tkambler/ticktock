@@ -10,4 +10,5 @@ RUN npm i
 RUN npm cache clean --force
 COPY . /opt/ticktock/
 RUN chmod +x ./execute
+RUN chmod +x ./report
 ENTRYPOINT ["node", "start.js"]

@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function() {
+exports = module.exports = function(config) {
     
     const winston = require('winston');
     const logger = new winston.Logger();
@@ -36,4 +36,4 @@ exports = module.exports = function() {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [];
+exports['@require'] = ['config'];

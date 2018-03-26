@@ -11,7 +11,7 @@ exports = module.exports = function(taskManager) {
         },
         'getTasks': (cb) => {
             const tasks = taskManager.tasks.map((task) => {
-                return task.task;
+                return task.getPrint();
             });
             cb(null, tasks);
         }
