@@ -2,9 +2,9 @@
 
 ---
 
-TickTock runs scheduled tasks within Docker containers. Each task can be independently configured to run within an existing container or within a container that is automatically created and subsequently removed. TickTock includes built-in support for sending task notifications via SMTP. It can also be extended to send notifications using a custom service that you provide in the form of a [Node.js](https://nodejs.org/) script.
+TickTock runs scheduled tasks within Docker containers. Each task can be independently configured to run within an existing container or within a container that is automatically created and subsequently removed. TickTock includes built-in support for sending task notification emails via SMTP. It can also be extended to send notifications using a custom service that you provide in the form of a [Node.js](https://nodejs.org/) script.
 
-The interval at which a task is run is defined using natural language with the help of the [Later](https://bunkat.github.io/later/getting-started.html) module. For example, to execute a task every ten minutes you would simply set an `interval` of `every 10 minutes`.
+The interval at which a task is run is defined using natural language with the help of the [Later](https://bunkat.github.io/later/getting-started.html) module. For example, to execute a task every ten minutes you would simply set an `interval` of `every 10 minutes`. Standard [crontab](https://crontab.guru/) intervals are also supported.
 
 ## Sample docker-compose.yml
 
@@ -22,7 +22,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
 
-## Sample Configuration File (config.yml)
+## Sample Configuration File (/config.yml)
 
 ```
 # Mandatory. An array of task descriptions.

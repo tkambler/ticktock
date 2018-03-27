@@ -16,8 +16,7 @@ exports = module.exports = function(config, docker, notifications, log) {
                 console.log('No tasks were registered.');
             }
             
-            config.on('change', this.onConfigChange.bind(this));
-            
+            // config.on('change', this.onConfigChange.bind(this));
             // setInterval(this.printStatus.bind(this), 5000);
             // this.printStatus();
             
