@@ -13,12 +13,8 @@ exports = module.exports = function(config, docker, notifications, log) {
             config.get('tasks').forEach(this.loadTask.bind(this));
             
             if (this.tasks.length === 0) {
-                console.log('No tasks were registered.');
+                log.info('No tasks were registered.');
             }
-            
-            // config.on('change', this.onConfigChange.bind(this));
-            // setInterval(this.printStatus.bind(this), 5000);
-            // this.printStatus();
             
         }
         
@@ -34,21 +30,18 @@ exports = module.exports = function(config, docker, notifications, log) {
             
             task.on('processing', () => {
                 
-                console.log('Processing task:');
-                console.log('');
-                task.print();
-                console.log('');
+                log.info('Processing task.', {
+                    'task': task.toJSON()
+                });
                 
             });
             
             task.on('processed', (res) => {
                 
-                console.log('Task completed:');
-                console.log('');
-                console.log('Exit Code: ' + res.exitCode);
-                console.log('');
-                console.log(res.outputBuffer.toString('utf8'));
-                console.log('');
+                log.info('Task completed.', {
+                    'task': task.toJSON(),
+                    'output': res.outputBuffer.toString('utf8')
+                });
 
             });
             
@@ -64,10 +57,9 @@ exports = module.exports = function(config, docker, notifications, log) {
             
             this.tasks.push(task);
             
-            console.log('Registered task:');
-            console.log('');
-            task.print();
-            console.log('');
+            log.info('Registered task.', {
+                'task': task.toJSON()
+            });
 
         }
         
@@ -89,7 +81,7 @@ exports = module.exports = function(config, docker, notifications, log) {
         
         onConfigChange() {
             
-            console.log('Configuration file has been updated.');
+            log.info('Configuration file has been updated.');
             
             const orphans = [];
             
@@ -135,13 +127,13 @@ exports = module.exports = function(config, docker, notifications, log) {
                 return;
             }
             
-            console.log(`${tasks.length} discarded task(s) found:`);
+            log.info(`${tasks.length} discarded task(s) found.`);
         
             tasks.forEach((task) => {
                 
-                console.log('');
-                task.print();
-                console.log('');
+                log.info('Discarding task.', {
+                    'task': task.toJSON()
+                });
                 
                 this.removeTask(task);
                 

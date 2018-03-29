@@ -12,9 +12,10 @@ tasks:
     execute_on_start: false
   - title: List running processes
     description: It lists running processes.
-    interval: "23 16 * * *"
-    type: exec
-    container: upbeat_mahavira
+    interval: "* */1 * * *"
+    type: run
+    image: mhart/alpine-node:8.6.0
+    # container: upbeat_mahavira
     command: ["ps", "aux"]
     overlap: false
     enabled: true

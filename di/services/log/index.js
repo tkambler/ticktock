@@ -16,7 +16,8 @@ exports = module.exports = function(config) {
     logger.add(winston.transports.Console, {
         'json': true,
         'timestamp': true,
-        'stringify': true
+        'stringify': true,
+        'prettyPrint': true
     });
     
     logger.stream = {

@@ -2,6 +2,6 @@
 
 module.exports = (task, res) => {
     
-    console.log('Custom notification', task, res);
+    // console.log('Custom notification', task, res);
     
 };
