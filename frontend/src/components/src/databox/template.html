@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+    <div class="panel-heading" ng-bind="$ctrl.heading"></div>
+    <div class="panel-body">
+        <div class="databox-section" ng-repeat="section in $ctrl.sections">
+            
+            <div class="databox-section-heading" ng-bind="section.label" ng-show="section.label"></div>
+            
+            <div class="row databox-section-contents">
+                
+                <div class="col-xs-12" ng-bind-html="section.content" ng-if="section.content && section.content_type !== 'code'"></div>
+                <div class="col-xs-12" ng-if="section.content && section.content_type === 'code'">
+                    <pre ng-bind-html="section.content"></pre>
+                </div>
+                
+                <div class="databox-item" ng-class="item.klass" ng-repeat="item in section.items">
+                    <div class="databox-item-inner" ng-if="!item.break">
+                        <div class="databox-item-label" ng-bind="::item.label" data-toggle="tooltip" ng-attr-title="{{item.description}}"></div>
+                        <div class="databox-item-value" ng-bind="::item.value" ng-show="!item.url"></div>
+                        <div class="databox-item-value" ng-show="item.url"><a ng-attr-href="{{item.url}}" ng-bind="::item.value"></a></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>

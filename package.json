@@ -10,26 +10,39 @@
   "license": "ISC",
   "dependencies": {
     "ahoy-di": "^1.2.0",
+    "basic-auth": "^2.0.0",
     "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
     "confit": "^2.3.0",
     "cron-parser": "^2.4.5",
     "dnode": "^1.2.2",
     "dockerode": "^2.5.4",
     "eventemitter2": "^5.0.1",
+    "express": "^4.16.3",
+    "fs-extra": "^5.0.0",
+    "grunt": "^1.0.2",
     "inquirer": "^5.1.0",
     "js-yaml": "^3.10.0",
     "json5": "^0.5.1",
+    "knex": "^0.14.4",
     "later": "^1.2.0",
     "lodash": "^4.17.5",
     "md5": "^2.2.1",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
+    "morgan": "^1.9.0",
     "node-cron": "^1.2.1",
     "nodemailer": "^4.6.0",
     "prettyjson": "^1.2.1",
     "shortstop-concat": "^1.0.2",
     "shortstop-handlers": "^1.0.1",
+    "sqlite3": "^4.0.0",
     "uuid": "^3.2.1",
     "winston": "^2.4.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "frontend/*"
+    ]
   }
 }

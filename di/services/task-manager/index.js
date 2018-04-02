@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(config, docker, notifications, log) {
+exports = module.exports = function(config, docker, notifications, log, knex) {
     
     const { ExecTask, RunTask } = require('app/tasks');
     const _ = require('lodash');
@@ -42,6 +42,19 @@ exports = module.exports = function(config, docker, notifications, log) {
                     'task': task.toJSON(),
                     'output': res.outputBuffer.toString('utf8')
                 });
+                
+                knex('outputs').insert({
+                    'task_id': task.id,
+                    'std_out': res.outputBuffer.toString('utf8'),
+                    'std_err': res.errorBuffer.toString('utf8'),
+                    'start_ts': res.start.format(),
+                    'end_ts': res.end.format(),
+                    'date': res.start.format('MM-DD-YYYY'),
+                    'exit_code': res.exitCode
+                })
+                    .catch((err) => {
+                        log.error(err);
+                    });
 
             });
             
@@ -67,9 +80,9 @@ exports = module.exports = function(config, docker, notifications, log) {
             
             switch (task.type) {
                 case 'exec':
-                    return new ExecTask(task, config, log);
+                    return new ExecTask(task, config, log, knex);
                 case 'run':
-                    return new RunTask(task, config, log);
+                    return new RunTask(task, config, log, knex);
                 default:
                     const err = new Error();
                     err.code = 'INVALID_TASK_TYPE';
@@ -209,4 +222,4 @@ exports = module.exports = function(config, docker, notifications, log) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['config', 'docker', 'notifications', 'log'];
+exports['@require'] = ['config', 'docker', 'notifications', 'log', 'knex'];

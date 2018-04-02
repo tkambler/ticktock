@@ -6,6 +6,8 @@ TickTock runs scheduled tasks within Docker containers. Each task can be indepen
 
 The interval at which a task is run is defined using natural language with the help of the [Later](https://bunkat.github.io/later/getting-started.html) module. For example, to execute a task every ten minutes you would simply set an `interval` of `every 10 minutes`. Standard [crontab](https://crontab.guru/) intervals are also supported.
 
+TickTock provides a visual front-end (accessible via the browser) through which you can view execution results.
+
 ## Sample docker-compose.yml
 
 A configuration file (more on that below) must be mounted into the TickTock container at `/config.yml`.

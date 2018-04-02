@@ -1,0 +1,51 @@
+databox {
+
+    .panel-body {
+        padding-bottom: 0;
+    }
+
+    .databox-section {
+
+        .databox-section-heading {
+            text-transform: uppercase;
+            font-weight: bold;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 4px;
+        }
+        
+        .databox-section-contents {
+            
+            pre {
+                margin-top: 15px;
+            }
+
+            .databox-item {
+
+                font-size: 0.9em;
+                padding: 15px;
+
+                .databox-item-inner {
+                    padding-bottom: 4px;
+                    border-bottom: 1px dashed #ccc;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                .databox-item-label {
+                    width: 30%;
+                    font-weight: bold;
+                }
+
+                .databox-item-value {
+                    width: 70%;
+                    text-align: right;
+                }
+
+            }
+            
+        }
+
+    }
+
+}

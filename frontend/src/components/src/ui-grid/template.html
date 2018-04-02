@@ -1,0 +1,66 @@
+<div class="row" ng-if="$ctrl.showCharts">
+    
+    <div class="col-xs-6" ng-repeat="chart in $ctrl.charts">
+        
+        <chart-panel options="chart"></chart-panel>
+        
+    </div>
+    
+</div>
+
+<div class="row">
+    
+    <div class="col-xs-12">
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="heading-container"><span ng-bind="$ctrl.grid.heading"></span></div>
+        <div class="buttons-container">
+            <ui-grid-dropdown-button options="$ctrl.filtersDropdown" ng-if="$ctrl.grid.enableFilters"></ui-grid-dropdown-button>
+            <ui-grid-dropdown-button options="$ctrl.paginationDropdown" ng-if="$ctrl.grid.enablePagination"></ui-grid-dropdown-button>
+            <ui-grid-dropdown-button options="$ctrl.actionsDropdown"></ui-grid-dropdown-button>
+        </div>
+    </div>
+    <ui-grid-search-input options="$ctrl.searchOptions" on-search="$ctrl.grid.onSearch(value, column)" ng-if="$ctrl.grid.enableSearching"></ui-grid-search-input>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-if="$ctrl.grid.enableMultiselect" class="checkbox-cell"><input type="checkbox" ng-model="$ctrl.grid.toggleAll"></th>
+                <th ng-repeat="column in $ctrl.grid.toggledColumns" ng-click="$ctrl.sort(column.object_key)">
+                    <span ng-bind="column.label"></span> <i ng-show="column.sortable && $ctrl.sortColumn === column.object_key" class="fa" ng-class="{ 'fa-caret-down': $ctrl.sortDirection === 'DESC', 'fa-caret-up': $ctrl.sortDirection === 'ASC' }"></i>
+                </th>
+                <th class="actions-cell" ng-if="$ctrl.grid.totalRowActions > 0"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in $ctrl.grid.rows">
+                <td ng-if="$ctrl.grid.enableMultiselect" class="checkbox-cell"><input type="checkbox" ng-model="$ctrl.grid.toggledRows[$ctrl.grid.rows.indexOf(row)]" ng-change="$ctrl.grid.onToggleRow(row)"></td>
+                <td ng-repeat="column in $ctrl.grid.toggledColumns" ng-bind-html="::row.gridValues[column.object_key]"></td>
+                <td class="actions-cell" ng-if="$ctrl.grid.totalRowActions > 0"><ui-grid-dropdown-button options="$ctrl.grid.rowActionOptions(row)"></ui-grid-dropdown-button></td>
+            </tr>
+            <tr ng-show="$ctrl.grid.rows.length === 0">
+                <td ng-attr-colspan="{{$ctrl.grid.colSpan}}">No Results Found</td>
+            </tr>
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+    <div class="panel-footer">
+        <div class="status-container">
+            <span ng-show="$ctrl.grid.rows.length > 0">Showing <span ng-bind="$ctrl.grid.index + 1 | number"></span> to <span ng-bind="$ctrl.grid.index + $ctrl.grid.rows.length | number"></span> of <span ng-bind="$ctrl.grid.totalCount | number"></span> Result(s)</span>
+        </div>
+        <div class="pagination-container">
+            <ul uib-pagination
+                total-items="$ctrl.grid.totalCount"
+                items-per-page="$ctrl.grid.activePagination"
+                max-size="5"
+                boundary-links="true"
+                ng-model="$ctrl.grid.currentPage"
+            ></ul>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+</div>

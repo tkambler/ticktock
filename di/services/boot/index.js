@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(config, docker, taskManager, ipcServer) {
+exports = module.exports = function(config, docker, taskManager, ipcServer, api) {
     
     class Boot {
         
@@ -22,4 +22,4 @@ exports = module.exports = function(config, docker, taskManager, ipcServer) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['config', 'docker', 'task-manager', 'ipc-server'];
+exports['@require'] = ['config', 'docker', 'task-manager', 'ipc-server', 'api'];

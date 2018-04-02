@@ -1,28 +1,30 @@
 timezone: America/New_York
+
+admin:
+  username: username
+  password: password
   
 tasks:
   - title: Do Something
     description: It does something very important.
+    id: do_something
     interval: every 10 seconds
     type: run
     image: mhart/alpine-node:8.6.0
     command: ["ls", "-al"]
     overlap: false
-    enabled: false
+    enabled: true
     execute_on_start: false
-  - title: List running processes
+  - title: List Running Processes
     description: It lists running processes.
+    id: list_processes
     interval: "* */1 * * *"
     type: run
     image: mhart/alpine-node:8.6.0
-    # container: upbeat_mahavira
     command: ["ps", "aux"]
     overlap: false
     enabled: true
     execute_on_start: false
-    random_delay: 20
-    # email: foo@localhost.site
-    # batch_email_interval: 3
 email:
   smtp:
     from_name: TickTock

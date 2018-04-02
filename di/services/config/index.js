@@ -28,7 +28,9 @@ exports = module.exports = function(appDir) {
     
     const initConfig = (config) => {
         
-        config.get('tasks').forEach((task, k) => {
+        const tasks = config.get('tasks');
+        
+        tasks.forEach((task, k) => {
 
             _.defaults(task, {
                 'overlap': false,
@@ -37,8 +39,19 @@ exports = module.exports = function(appDir) {
                 'email': [],
                 'random_delay': 0
             });
+
+            if (!task.id) {
+                throw new Error(`task.id is required.`);
+            }
             
-            task.id = uuid.v4();
+            const idTasks = _.filter(tasks, {
+                'id': task.id
+            });
+            
+            if (idTasks.length > 1) {
+                throw new Error(`More than one task has been assigned the following ID: ${task.id}`);
+            }
+
             task.batch_email_interval = parseInt(task.batch_email_interval, 10);
             task.batch_email_interval = task.batch_email_interval || 0;
             task.random_delay = parseInt(task.random_delay, 10);
