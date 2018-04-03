@@ -21,13 +21,20 @@ services:
     image: tkambler/ticktock
     volumes:
       - ./example/config.yml:/config.yml
+      - ./data:/var/ticktock
       - /var/run/docker.sock:/var/run/docker.sock
 ```
 
 ## Sample Configuration File (/config.yml)
 
 ```
+# Username / password for web admin panel
+admin:
+  username: username
+  password: password
+  
 # Mandatory. An array of task descriptions.
+  
 tasks:
 
   - title: Do Something
