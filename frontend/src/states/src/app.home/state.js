@@ -24,7 +24,7 @@ module.exports = {
                     'parent': '#',
                     'text': task.title,
                     'state': {
-                        'opened': false
+                        'opened': true
                     }
                 });
                 task.dates.forEach((date) => {
@@ -76,7 +76,7 @@ module.exports = {
                         return this._treeConfig ? this._treeConfig : this._treeConfig = {
                             core : {
                                 multiple : false,
-                                animation: true,
+                                animation: false,
                                 error : function(error) {
                                     $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
                                 },
@@ -245,18 +245,18 @@ module.exports = {
             },
             'template': `
             
-                <div class="row">
+                <div class="state-container">
             
-                    <div class="col-xs-3">
-            
+                    <div class="tree-nav noselect">
+        
                         <div js-tree="$ctrl.treeConfig" should-apply="$ctrl.shouldApply" ng-model="$ctrl.treeData" tree="$ctrl.treeInstance" tree-events="ready:$ctrl.onReady;select_node:$ctrl.onSelectNode"></div>
-                        
+                    
                     </div>
-            
-                    <div class="col-xs-9" ng-if="$ctrl.databoxOptions">
-            
+        
+                    <div class="databox-container" ng-if="$ctrl.databoxOptions">
+        
                         <databox options="$ctrl.databoxOptions"></databox>
-            
+        
                     </div>
             
                 </div>

@@ -11,7 +11,7 @@ exports = module.exports = function(log, config, appDir, knex) {
     const _ = require('lodash');
     const port = 80;
     
-    app.use(require('morgan')('combined'));
+    // app.use(require('morgan')('combined'));
     
     app.use(require('body-parser').json({
         'limit': '50mb'

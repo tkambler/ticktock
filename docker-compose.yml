@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
   ticktock-dev:
-    image: tkambler/ticktock
+    image: ticktock-dev
     build:
       context: .
       target: development
