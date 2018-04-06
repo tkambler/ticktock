@@ -30,7 +30,6 @@
     "md5": "^2.2.1",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
-    "morgan": "^1.9.0",
     "node-cron": "^1.2.1",
     "nodemailer": "^4.6.0",
     "prettyjson": "^1.2.1",

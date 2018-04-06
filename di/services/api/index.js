@@ -11,8 +11,6 @@ exports = module.exports = function(log, config, appDir, knex) {
     const _ = require('lodash');
     const port = 80;
     
-    // app.use(require('morgan')('combined'));
-    
     app.use(require('body-parser').json({
         'limit': '50mb'
     }));
@@ -151,14 +149,14 @@ exports = module.exports = function(log, config, appDir, knex) {
                 .then((outputs) => {
                     
                     outputs = outputs.map((output) => {
-                        output.date = moment(output.date, 'MM-DD-YYYY');
+                        output.startMoment = moment(output.start_ts);
                         return output;
                     });
 
                     outputs.sort((a, b) => {
-                        if (a.date.isBefore(b.date)) {
+                        if (a.startMoment.isBefore(b.startMoment)) {
                             return -1;
-                        } else if (a.date.isAfter(b.date)) {
+                        } else if (a.startMoment.isAfter(b.startMoment)) {
                             return 1;
                         } else {
                             return 0;
@@ -166,7 +164,7 @@ exports = module.exports = function(log, config, appDir, knex) {
                     });
                     
                     return outputs.map((output) => {
-                        output.date = output.date.format('MM-DD-YYYY');
+                        delete output.startMoment;
                         return output;
                     });
 

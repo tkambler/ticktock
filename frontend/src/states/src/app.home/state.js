@@ -74,28 +74,28 @@ module.exports = {
                     get treeConfig() {
                         
                         return this._treeConfig ? this._treeConfig : this._treeConfig = {
-                            core : {
-                                multiple : false,
-                                animation: false,
-                                error : function(error) {
+                            'core': {
+                                'multiple': false,
+                                'animation': false,
+                                'error': function(error) {
                                     $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
                                 },
-                                check_callback : true,
-                                worker : true
+                                'check_callback': true,
+                                'worker': true
                             },
-                            types : {
-                                default : {
-                                    icon : 'glyphicon glyphicon-flash'
+                            'types': {
+                                'default': {
+                                    'icon': 'glyphicon glyphicon-flash'
                                 },
-                                star : {
-                                    icon : 'glyphicon glyphicon-star'
+                                'star': {
+                                    'icon': 'glyphicon glyphicon-star'
                                 },
-                                cloud : {
-                                    icon : 'glyphicon glyphicon-cloud'
+                                'cloud': {
+                                    'icon': 'glyphicon glyphicon-cloud'
                                 }
                             },
-                            version : 1,
-                            plugins : ['types']
+                            'plugins': ['types'],
+                            'version': 1,
                         };
                         
                     }
