@@ -38,5 +38,6 @@ RUN npm cache clean --force
 COPY . /opt/ticktock/
 RUN chmod +x ./execute
 RUN chmod +x ./report
+RUN rm -rf /opt/ticktock/frontend
 COPY --from=development /opt/ticktock/frontend/public /opt/ticktock/frontend/public
 ENTRYPOINT ["node", "start.js"]

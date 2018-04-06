@@ -25,15 +25,19 @@ app.component('databox', {
                 }
                 
                 this._heading = this.options.heading;
+                
                 _.defaults(this.options, {
+                    'actions': [],
                     'sections': []
                 });
+                
                 if (_.get(this, 'options.items', []).length > 0) {
                     this.options.sections.splice(0, 0, {
                         'items': this.options.items
                     });
                     delete this.options.items;
                 }
+                
                 this._sections = _.chain(this.options.sections)
                     .cloneDeep()
                     .map((section) => {
@@ -67,20 +71,49 @@ app.component('databox', {
                         return section;
                     })
                     .value();
+                    
             }
 
             $postLink() {
+                
                 _.defer(() => {
                     $element.find('[data-toggle="tooltip"]').tooltip();
                 });
+                
+            }
+            
+            get actions() {
+                
+                return this.options.actions;
+                
+            }
+            
+            get actionOptions() {
+                
+                if (this._actionOptions) {
+                    return this._actionOptions;
+                }
+                
+                this._actionOptions = {
+                    'label': 'Actions',
+                    'size': 'small',
+                    'links': this.actions
+                };
+                
+                return this._actionOptions;
+                
             }
 
             get sections() {
+                
                 return this._sections || [];
+                
             }
 
             get heading() {
+                
                 return this._heading;
+                
             }
 
         };

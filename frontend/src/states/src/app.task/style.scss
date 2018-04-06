@@ -1,0 +1,26 @@
+.primary.app-task {
+    
+    .state-container {
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+        
+        .tree-nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 25%;
+            overflow-y: auto;
+        }
+        
+        .databox-container {
+            width: 75%;
+            padding-left: 15px;
+            padding-top: 15px;
+        }
+        
+    }
+    
+}

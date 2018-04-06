@@ -3,6 +3,12 @@ databox {
     .panel-body {
         padding-bottom: 0;
     }
+    
+    dropdown-button {
+        display: inline-block;
+        position: relative;
+        align-self: center;
+    }
 
     .databox-section {
 

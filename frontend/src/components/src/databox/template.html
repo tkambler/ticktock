@@ -1,5 +1,12 @@
 <div class="panel panel-default">
-    <div class="panel-heading" ng-bind="$ctrl.heading"></div>
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-8" ng-bind="$ctrl.heading"></div>
+            <div class="col-xs-4">
+                <dropdown-button ng-if="$ctrl.actions.length > 0" options="$ctrl.actionOptions" class="pull-right"></dropdown-button>
+            </div>
+        </div>
+    </div>
     <div class="panel-body">
         <div class="databox-section" ng-repeat="section in $ctrl.sections">
             

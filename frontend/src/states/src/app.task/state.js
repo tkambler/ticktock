@@ -7,33 +7,37 @@ import _ from 'lodash';
 import s from 'underscore.string';
 
 module.exports = {
-    'name': 'app.home',
-    'url': '/home?outputID&taskID',
+    'name': 'app.task',
+    'url': '/task/:taskId',
     'resolve': {
-        'tasks': function(Task) {
+        'task': function(Task, $stateParams, $log) {
             
-            return Task.getList();
+            return Task.getList()
+                .then((tasks) => {
+                    return _.find(tasks, {
+                        'id': $stateParams.taskId
+                    });
+                });
             
         },
-        'treeData': function(tasks, $log) {
+        'treeData': function(task, $log) {
             
-            const res = [];
-            
-            tasks.forEach((task) => {
-                res.push({
+            const res = [
+                {
+                    'text': task.title,
                     'id': task.id,
                     'parent': '#',
-                    'text': task.title,
                     'state': {
                         'opened': true
                     }
-                });
-                task.dates.forEach((date) => {
-                    res.push({
-                        'id': `${task.id}--${date}`,
-                        'parent': task.id,
-                        'text': date
-                    });
+                }
+            ];
+            
+            task.dates.forEach((date) => {
+                res.push({
+                    'id': `${task.id}--${date}`,
+                    'parent': task.id,
+                    'text': date
                 });
             });
             
@@ -44,7 +48,7 @@ module.exports = {
     'views': {
         'content@app': {
             'controllerAs': '$ctrl',
-            'controller': function($log, $state, filterEnabled, $uibModal, $http, notify, treeData, tasks, Output, $timeout, $stateParams, saveFile) {
+            'controller': function($log, $state, filterEnabled, $uibModal, $http, notify, treeData, task, Output, $timeout, $stateParams, saveFile) {
                 
                 return new class {
                     
@@ -150,10 +154,6 @@ module.exports = {
                     
                     getTaskOutputs(taskID, date) {
                         
-                        const task = _.find(tasks, {
-                            'id': taskID
-                        });
-                        
                         return task.one('outputs', date).getList();
                         
                     }
@@ -186,10 +186,6 @@ module.exports = {
                     }
                     
                     loadTaskOutput(id, taskID) {
-                        
-                        const task = _.find(tasks, {
-                            'id': taskID
-                        });
                         
                         return Output.one(id).get()
                             .then((output) => {

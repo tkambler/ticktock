@@ -4,25 +4,45 @@ import app from 'app';
 import './style.scss';
 
 app.component('header', {
-    'controller': function($log, $state, filterEnabled, $uibModal) {
+    'controller': function($log, $state, filterEnabled, $uibModal, Task) {
 
-        let links = filterEnabled([
+        const taskLinks = [];
+        
+        const links = [
             {
                 'label': 'TickTock',
-                'links': filterEnabled([
+                'links': [
                     {
                         'label': 'Home',
                         'ui-sref': 'app.home'
+                    },
+                    {
+                        'label': 'Tasks',
+                        'links': taskLinks
                     }
-                ])
+                ]
             }
-        ]);
+        ];
 
         return new class {
 
             $onInit() {
                 
                 this.links = links;
+                
+                return Task.getList()
+                    .then((tasks) => {
+                        
+                        tasks = tasks.originalElements;
+                        
+                        tasks.forEach((task) => {
+                            taskLinks.push({
+                                'label': task.title,
+                                'ui-sref': `app.task({ taskId: '${task.id}'})`
+                            });
+                        });
+                        
+                    });
                 
             }
 

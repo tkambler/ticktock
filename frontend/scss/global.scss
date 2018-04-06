@@ -38,3 +38,7 @@ ui-view.content {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+.noty_layout {
+    z-index: 10000;
+}

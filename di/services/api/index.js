@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(log, config, appDir, knex) {
+exports = module.exports = function(log, config, appDir, knex, taskManager) {
 
     const Promise = require('bluebird');    
     const express = require('express');
@@ -137,6 +137,22 @@ exports = module.exports = function(log, config, appDir, knex) {
             
         });
         
+    app.route('/api/tasks/:task_id')
+        .get((req, res, next) => {
+            
+            return res.send(req.task);
+            
+        });
+        
+    app.route('/api/tasks/:task_id/trigger')
+        .put((req, res, next) => {
+            
+            taskManager.execute(req.task.id);
+            
+            return res.status(200).end();
+            
+        });
+        
     app.route('/api/tasks/:task_id/outputs/:date')
         .get((req, res, next) => {
             
@@ -189,4 +205,4 @@ exports = module.exports = function(log, config, appDir, knex) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['log', 'config', 'appDir', 'knex'];
+exports['@require'] = ['log', 'config', 'appDir', 'knex', 'task-manager'];
