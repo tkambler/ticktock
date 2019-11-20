@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.5.6",
+    "angular": "^1.7.9",
     "angular-json-tree": "^1.0.1",
     "angular-loading-bar": "^0.9.0",
     "angular-sanitize": "^1.5.6",
