@@ -49,7 +49,7 @@
     "jquery": "^2.2.3",
     "json5-loader": "^1.0.1",
     "load-grunt-tasks": "^3.5.2",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.19",
     "moment": "^2.21.0",
     "ng-js-tree": "0.0.10",
     "node-sass": "^4.7.2",
