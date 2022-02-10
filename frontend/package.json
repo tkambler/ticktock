@@ -52,7 +52,7 @@
     "lodash": "^4.17.5",
     "moment": "^2.21.0",
     "ng-js-tree": "0.0.10",
-    "node-sass": "^4.7.2",
+    "node-sass": "^7.0.0",
     "noty": "^3.1.2",
     "opensans-npm-webfont": "^1.0.0",
     "raw-loader": "^0.5.1",
