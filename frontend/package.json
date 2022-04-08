@@ -50,7 +50,7 @@
     "json5-loader": "^1.0.1",
     "load-grunt-tasks": "^3.5.2",
     "lodash": "^4.17.5",
-    "moment": "^2.21.0",
+    "moment": "^2.29.2",
     "ng-js-tree": "0.0.10",
     "node-sass": "^4.7.2",
     "noty": "^3.1.2",
